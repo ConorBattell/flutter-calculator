@@ -9,7 +9,7 @@ class CalculatorApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Calculator by Conor',
+      title: 'Calculator by Your Name',
       theme: ThemeData(primarySwatch: Colors.blue),
       home: CalculatorScreen(),
     );
@@ -39,6 +39,15 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
         } catch (e) {
           _result = ' Error';
         }
+      } else if (value == '^2') {
+        try {
+          Expression exp = Expression.parse('($_expression) * ($_expression)');
+          final evaluator = const ExpressionEvaluator();
+          var evalResult = evaluator.eval(exp, {});
+          _result = ' = $evalResult';
+        } catch (e) {
+          _result = ' Error';
+        }
       } else {
         _expression += value;
       }
@@ -60,7 +69,7 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Calculator by Conor')),
+      appBar: AppBar(title: Text('Calculator by Your Name')),
       body: Column(
         children: [
           Expanded(
@@ -79,6 +88,7 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
               Row(children: [_buildButton('4'), _buildButton('5'), _buildButton('6'), _buildButton('*')]),
               Row(children: [_buildButton('1'), _buildButton('2'), _buildButton('3'), _buildButton('-')]),
               Row(children: [_buildButton('0'), _buildButton('C'), _buildButton('='), _buildButton('+')]),
+              Row(children: [_buildButton('^2')]),
             ],
           ),
         ],
